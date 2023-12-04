@@ -75,5 +75,23 @@ namespace AdventOfCode
                 return true;
             return false;
         }
+
+        public static List<int> ExtractIntegers(string input)
+        {
+            List<int> result = new List<int>();
+
+            // Use regular expression to match integers in the string
+            MatchCollection matches = Regex.Matches(input, @"\d+");
+
+            foreach (Match match in matches)
+            {
+                if (int.TryParse(match.Value, out int number))
+                {
+                    result.Add(number);
+                }
+            }
+
+            return result;
+        }
     }   
 }
