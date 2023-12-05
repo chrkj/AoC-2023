@@ -1,5 +1,4 @@
 using AoCHelper;
-using System.Collections.Generic;
 
 namespace AdventOfCode;
 
@@ -40,7 +39,7 @@ public class Day04 : BaseDay
 
     public override ValueTask<string> Solve_2()
     {
-        List<(int, int)> cardTable = new List<(int, int)>();
+        List<(int numberOfCards, int pointsWorth)> cardTable = new List<(int, int)>();
         for (int i = 0; i < _input.Length; i++)
         {
             int points = 0;
@@ -57,17 +56,17 @@ public class Day04 : BaseDay
             cardTable.Add((1, points));
         }
 
-        int numberOfCards = 0;
+        int totalNumberOfCards = 0;
         for (int i = 0; i < cardTable.Count; i++)
         {
-            for (int j = 0; j < cardTable[i].Item1; j++)
+            for (int j = 0; j < cardTable[i].numberOfCards; j++)
             {
-                numberOfCards += cardTable[i].Item1;
-                for (int k = i + 1; k < i + cardTable[i].Item2 + 1; k++)
+                totalNumberOfCards += cardTable[i].numberOfCards;
+                for (int k = i + 1; k < i + cardTable[i].pointsWorth + 1; k++)
                 {
                     if (k > cardTable.Count - 1)
                         break;
-                    cardTable[k] = (cardTable[k].Item1 + 1, cardTable[k].Item2);
+                    cardTable[k] = (cardTable[k].numberOfCards + 1, cardTable[k].pointsWorth);
                 }
             }
         }
