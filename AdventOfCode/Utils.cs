@@ -1,6 +1,4 @@
-﻿using System;
-using System.Reflection;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 namespace AdventOfCode
 {
@@ -76,22 +74,15 @@ namespace AdventOfCode
             return false;
         }
 
-        public static List<int> ExtractIntegers(string input)
+        public static IEnumerable<int> ExtractInts(string str)
         {
-            List<int> result = new List<int>();
-
-            // Use regular expression to match integers in the string
-            MatchCollection matches = Regex.Matches(input, @"\d+");
-
-            foreach (Match match in matches)
-            {
-                if (int.TryParse(match.Value, out int number))
-                {
-                    result.Add(number);
-                }
-            }
-
-            return result;
+            return Regex.Matches(str, "-?\\d+").Select(m => int.Parse(m.Value));
         }
-    }   
+
+        public static IEnumerable<long> ExtractLongs(string str)
+        {
+            return Regex.Matches(str, "-?\\d+").Select(m => long.Parse(m.Value));
+        }
+
+    }
 }

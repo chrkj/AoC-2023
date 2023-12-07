@@ -20,8 +20,8 @@ public class Day04 : BaseDay
         {
             int points = 0;
             string[] card = _input[i].Split(new char[] { '|', ':'});
-            List<int> winningNumbers = Utils.ExtractIntegers(card[1]);
-            List<int> myNumbers = Utils.ExtractIntegers(card[2]);
+            List<int> winningNumbers = Utils.ExtractInts(card[1]).ToList();
+            List<int> myNumbers = Utils.ExtractInts(card[2]).ToList();
             
             foreach (int number in myNumbers)
             {
@@ -44,8 +44,8 @@ public class Day04 : BaseDay
         {
             int points = 0;
             string[] card = _input[i].Split(new char[] { '|', ':' });
-            List<int> winningNumbers = Utils.ExtractIntegers(card[1]);
-            List<int> myNumbers = Utils.ExtractIntegers(card[2]);
+            List<int> winningNumbers = Utils.ExtractInts(card[1]).ToList();
+            List<int> myNumbers = Utils.ExtractInts(card[2]).ToList();
 
             foreach (int number in myNumbers)
             {
