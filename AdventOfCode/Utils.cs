@@ -76,12 +76,12 @@ namespace AdventOfCode
 
         public static IEnumerable<int> ExtractInts(string str)
         {
-            return Regex.Matches(str, "-?\\d+").Select(m => int.Parse(m.Value));
+            return Regex.Matches(str, "-?\\d+").AsParallel().Select(m => int.Parse(m.Value));
         }
 
         public static IEnumerable<long> ExtractLongs(string str)
         {
-            return Regex.Matches(str, "-?\\d+").Select(m => long.Parse(m.Value));
+            return Regex.Matches(str, "-?\\d+").AsParallel().Select(m => long.Parse(m.Value));
         }
 
     }

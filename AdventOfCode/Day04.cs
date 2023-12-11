@@ -70,7 +70,7 @@ public class Day04 : BaseDay
                 }
             }
         }
-        int sum = cardTable.Sum(tuple => tuple.Item1);
+        int sum = cardTable.Sum(tuple => tuple.numberOfCards);
         return new ValueTask<string>(sum.ToString());
     }
 
