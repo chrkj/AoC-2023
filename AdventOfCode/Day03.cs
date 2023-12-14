@@ -37,7 +37,7 @@ public class Day03 : BaseDay
                     int xOffset = _directions[j, 0];
                     int yOffset = _directions[j, 1];
 
-                    if (Utils.IsWithinBounds(_input, i + xOffset, index + yOffset))
+                    if (!Utils.IsWithinBounds(_input, i + xOffset, index + yOffset))
                         continue;
 
                     if (char.IsDigit(_input[i + xOffset][index + yOffset]))
@@ -69,7 +69,7 @@ public class Day03 : BaseDay
                     int xOffset = _directions[j, 0];
                     int yOffset = _directions[j, 1];
 
-                    if (Utils.IsWithinBounds(_input, i + xOffset, index + yOffset))
+                    if (!Utils.IsWithinBounds(_input, i + xOffset, index + yOffset))
                         continue;
 
                     if (char.IsDigit(_input[i + xOffset][index + yOffset]))
