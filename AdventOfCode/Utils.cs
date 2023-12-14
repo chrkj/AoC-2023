@@ -70,8 +70,8 @@ namespace AdventOfCode
         public static bool IsWithinBounds(string[] array, int row, int col)
         {
             if (row > array[0].Length - 1 || row < 0 || col > array.Length - 1 || col < 0)
-                return true;
-            return false;
+                return false;
+            return true;
         }
 
         public static IEnumerable<int> ExtractInts(string str)
@@ -82,6 +82,18 @@ namespace AdventOfCode
         public static IEnumerable<long> ExtractLongs(string str)
         {
             return Regex.Matches(str, "-?\\d+").AsParallel().Select(m => long.Parse(m.Value));
+        }
+
+        public static string ModifyCharacter(string inputString, int index, char newChar)
+        {
+            // Convert the string to a char array
+            char[] charArray = inputString.ToCharArray();
+
+            // Modify the character at the specified index
+            charArray[index] = newChar;
+
+            // Create a new string from the modified char array
+            return new string(charArray);
         }
 
     }
