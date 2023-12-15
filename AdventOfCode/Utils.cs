@@ -62,9 +62,9 @@ namespace AdventOfCode
                 Console.WriteLine(array[i]);
         }
 
-        public static bool IsWithinBounds<T>(T[,] array, int row, int col)
+        public static bool IsWithinBounds<T>(T[][] array, int row, int col)
         {
-            return row >= 0 && row < array.GetLength(0) && col >= 0 && col < array.GetLength(1);
+            return row >= 0 && row < array.Length && col >= 0 && col < array[0].Length;
         }
 
         public static bool IsWithinBounds(string[] array, int row, int col)

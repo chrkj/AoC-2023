@@ -4,14 +4,15 @@ namespace AdventOfCode;
 
 public class Day14 : BaseDay
 {
-    private string[] _input1;
-    private string[] _input2;
+    private char[][] _input1;
+    private char[][] _input2;
 
     public Day14()
     {
         string inputString = File.ReadAllText(InputFilePath);
-        _input1 = inputString.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
-        _input2 = inputString.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+        var _input = inputString.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+        _input1 = _input.Select(line => line.ToCharArray()).ToArray();
+        _input2 = _input.Select(line => line.ToCharArray()).ToArray();
     }
 
     public override ValueTask<string> Solve_1()
@@ -54,9 +55,9 @@ public class Day14 : BaseDay
         return new ValueTask<string>(sum.ToString());
     }
 
-    public static void TiltNorth(string[] arr)
+    public static void TiltNorth(char[][] arr)
     {
-        for (int row = 0; row < arr.Length; row++)
+        for (int row = 1; row < arr.Length; row++)
         {
             for (int col = 0; col < arr[0].Length; col++)
             {
@@ -67,17 +68,17 @@ public class Day14 : BaseDay
                 {
                     if (!Utils.IsWithinBounds(arr, currentRow - 1, col) || arr[currentRow - 1][col] != '.')
                         break;
-                    arr[currentRow] = Utils.ModifyCharacter(arr[currentRow], col, '.');
-                    arr[currentRow - 1] = Utils.ModifyCharacter(arr[currentRow - 1], col, 'O');
+                    arr[currentRow][col] = '.';
+                    arr[currentRow - 1][col] = 'O';
                     currentRow--;
                 }
             }
         }
     }
 
-    public static void TiltSouth(string[] arr)
+    public static void TiltSouth(char[][] arr)
     {
-        for (int row = arr.Length - 1; row >= 0; row--)
+        for (int row = arr.Length - 2; row >= 0; row--)
         {
             for (int col = 0; col < arr[0].Length; col++)
             {
@@ -88,17 +89,17 @@ public class Day14 : BaseDay
                 {
                     if (!Utils.IsWithinBounds(arr, currentRow + 1, col) || arr[currentRow + 1][col] != '.')
                         break;
-                    arr[currentRow] = Utils.ModifyCharacter(arr[currentRow], col, '.');
-                    arr[currentRow + 1] = Utils.ModifyCharacter(arr[currentRow + 1], col, 'O');
+                    arr[currentRow][col] = '.';
+                    arr[currentRow + 1][col] = 'O';
                     currentRow++;
                 }
             }
         }
     }
 
-    public static void TiltWest(string[] arr) 
+    public static void TiltWest(char[][] arr) 
     {
-        for (int col = 0; col < arr[0].Length; col++)
+        for (int col = 1; col < arr[0].Length; col++)
         {
             for (int row = 0; row < arr.Length; row++)
             {
@@ -109,17 +110,17 @@ public class Day14 : BaseDay
                 {
                     if (!Utils.IsWithinBounds(arr, row, currentCol - 1) || arr[row][currentCol - 1] != '.')
                         break;
-                    arr[row] = Utils.ModifyCharacter(arr[row], currentCol, '.');
-                    arr[row] = Utils.ModifyCharacter(arr[row], currentCol - 1, 'O');
+                    arr[row][currentCol] = '.';
+                    arr[row][currentCol - 1] = 'O';
                     currentCol--;
                 }
             }
         }
     }
 
-    public static void TiltEast(string[] arr)
+    public static void TiltEast(char[][] arr)
     {
-        for (int col = arr[0].Length - 1; col >= 0; col--)
+        for (int col = arr[0].Length - 2; col >= 0; col--)
         {
             for (int row = arr.Length - 1; row >= 0; row--)
             {
@@ -130,8 +131,8 @@ public class Day14 : BaseDay
                 {
                     if (!Utils.IsWithinBounds(arr, row, currentCol + 1) || arr[row][currentCol + 1] != '.')
                         break;
-                    arr[row] = Utils.ModifyCharacter(arr[row], currentCol, '.');
-                    arr[row] = Utils.ModifyCharacter(arr[row], currentCol + 1, 'O');
+                    arr[row][currentCol] = '.';
+                    arr[row][currentCol + 1] = 'O';
                     currentCol++;
                 }
             }
