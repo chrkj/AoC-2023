@@ -15,10 +15,10 @@ public class Day15 : BaseDay
     public override ValueTask<string> Solve_1()
     {
         long sum = 0;
-        foreach (var line in _input)
+        foreach (var sequence in _input)
         {
             int value = 0;
-            foreach (var ch in line)
+            foreach (var ch in sequence)
             {
                 value += ch;
                 value *= 17;
@@ -32,54 +32,70 @@ public class Day15 : BaseDay
     public override ValueTask<string> Solve_2()
     {
         Dictionary<int, List<(string label, int focalLength)>> boxes = new();
-        
-        foreach (var line in _input)
+        foreach (var sequence in _input)
         {
-            int box = 0;
-            string label = "";
-            foreach (var ch in line)
-            {
-                if (ch < 'a')
-                    break;
-                box += ch;
-                box *= 17;
-                box %= 256;
-                label += ch;
-            }
-            if (line.Contains('='))
-            {
-                int focalLength = line[^1] - '0';
-                if (boxes.TryGetValue(box, out List<(string label, int focalLength)> lenses))
-                {
-                    int index = lenses.FindIndex(item => item.label == label);
-                    if (index != -1)
-                        lenses[index] = (label, focalLength);
-                    else
-                        lenses.Add((label, focalLength));
-                }
-                else
-                    boxes[box] = new List<(string label, int focalLength)> { (label, focalLength) };
-            }
+            CalculateHash(sequence, out int box, out string label);
+            if (sequence[^2] == '=')
+                InsertOrSwapLens(boxes, sequence, box, label);
             else
-            {
-                if (boxes.TryGetValue(box, out List<(string label, int focalLength)> lenses))
-                {
-                    int index = lenses.FindIndex(item => item.label == label);
-                    if (index != -1)
-                        lenses.RemoveAt(index);
-                }
-            }
+                RemoveLens(boxes, box, label);
         }
+        long lensPower = CalculateLenspower(boxes);
+        return new ValueTask<string>(lensPower.ToString());
+    }
+
+    private static void CalculateHash(char[] sequence, out int box, out string label)
+    {
+        box = 0;
+        label = "";
+        foreach (var ch in sequence)
+        {
+            if (ch < 'a')
+                break;
+            box += ch;
+            box *= 17;
+            box %= 256;
+            label += ch;
+        }
+    }
+
+    private static long CalculateLenspower(Dictionary<int, List<(string label, int focalLength)>> boxes)
+    {
         long lensPower = 0;
         foreach (var box in boxes)
         {
             int slotNr = 1;
-            foreach (var (_, focalLength) in box.Value) 
+            foreach (var (_, focalLength) in box.Value)
             {
                 lensPower += (box.Key + 1) * slotNr * focalLength;
                 slotNr++;
             }
         }
-        return new ValueTask<string>(lensPower.ToString());
+        return lensPower;
+    }
+
+    private static void RemoveLens(Dictionary<int, List<(string label, int focalLength)>> boxes, int box, string label)
+    {
+        if (boxes.TryGetValue(box, out List<(string label, int focalLength)> lenses))
+        {
+            int index = lenses.FindIndex(item => item.label == label);
+            if (index != -1)
+                lenses.RemoveAt(index);
+        }
+    }
+
+    private static void InsertOrSwapLens(Dictionary<int, List<(string label, int focalLength)>> boxes, char[] line, int box, string label)
+    {
+        int focalLength = line[^1] - '0';
+        if (boxes.TryGetValue(box, out List<(string label, int focalLength)> lenses))
+        {
+            int index = lenses.FindIndex(item => item.label == label);
+            if (index != -1)
+                lenses[index] = (label, focalLength);
+            else
+                lenses.Add((label, focalLength));
+        }
+        else
+            boxes[box] = new List<(string label, int focalLength)> { (label, focalLength) };
     }
 }
